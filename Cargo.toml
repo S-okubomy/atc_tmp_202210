@@ -1,0 +1,22 @@
+[package]
+name = "atc_tmp_202210"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+#proconio = "0.4.3"
+proconio = { version = "=0.4.3", features = ["derive"] }
+cli_test_dir = "0.1.7"
+primal = "0.2"
+itertools = "0.10.3"
+num = "0.4.0"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[[bin]]
+name = "atc1"
+path = "src/atc1.rs"
