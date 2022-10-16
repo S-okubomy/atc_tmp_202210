@@ -1,8 +1,14 @@
 use proconio::{ input };
 
 fn main() {
-    apple2();
+    input! {
+        n: usize,
+        a_vec: [usize; n],
+    }
+    println!("{}", a_vec.iter().sum::<usize>());
 }
+
+
 
 #[allow(dead_code)]
 fn apple() {
