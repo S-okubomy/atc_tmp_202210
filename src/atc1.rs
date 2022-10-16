@@ -1,11 +1,14 @@
 use proconio::{ input };
 
+// cargo run --bin atc1
 fn main() {
     input! {
         n: usize,
         a_vec: [usize; n],
     }
-    println!("{}", a_vec.iter().sum::<usize>());
+    // let mod_sum = a_vec.iter().sum::<usize>() % 100;
+    let mod_sum_seq = a_vec.iter().fold(0, |acc, cur| (acc + cur) % 100 );
+    println!("{}", mod_sum_seq);
 }
 
 
