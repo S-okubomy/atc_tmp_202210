@@ -3,12 +3,10 @@ use proconio::{ input };
 // cargo run --bin atc1
 fn main() {
     input! {
-        n: usize,
-        a_vec: [usize; n],
+        n: usize, x: usize, y: usize,
     }
-    // let mod_sum = a_vec.iter().sum::<usize>() % 100;
-    let mod_sum_seq = a_vec.iter().fold(0, |acc, cur| (acc + cur) % 100 );
-    println!("{}", mod_sum_seq);
+    let cnt: usize = (1..=n).filter(|v| (*v % x == 0) || (*v % y == 0)).count();
+    println!("{}", cnt);
 }
 
 
