@@ -5,8 +5,16 @@ fn main() {
     input! {
         n: usize, x: usize, y: usize,
     }
-    let cnt: usize = (1..=n).filter(|v| (*v % x == 0) || (*v % y == 0)).count();
-    println!("{}", cnt);
+    println!("{}", n / x + n / y - n / lcm(x, y));
+}
+
+fn lcm(a: usize, b: usize) -> usize {
+    (a * b) / gcd(a, b)
+}
+
+fn gcd(a: usize, b: usize) -> usize {
+    if b == 0 { return a; }
+    gcd(b, a%b)
 }
 
 
