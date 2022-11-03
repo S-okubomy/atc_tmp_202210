@@ -3,25 +3,21 @@ use proconio::{ input };
 // cargo run --bin atc1
 fn main() {
     input! {
-        n: usize, s: usize,
-        mut a_vac: [usize; n],
+        n: usize,
     }
 
-    a_vac.insert(0, 0);
-    let mut dp: Vec<Vec<bool>> = vec![vec![false; s+1]; n+1];
-
-    dp[0][0] = true;
-    for i in 1..=n {
-        let card_no = a_vac[i];
-        for j in 0..=s {
-            if j >= card_no {
-                dp[i][j] = dp[i-1][j] | dp[i-1][j-card_no];
-            } else {
-                dp[i][j] = dp[i-1][j];
-            }
-        }
+    let mut ans = 1;
+    for i in 2..=n {
+        ans *= i;
     }
-    println!("{}", if dp[n][s] { "Yes" } else { "No" });
+    println!("{}", ans);
+}
+
+fn fact(x: usize) -> usize {
+    match x {
+        0 | 1 => 1,
+        _ => x * fact(x-1),
+    }
 }
 
 fn lcm(a: usize, b: usize) -> usize {
