@@ -5,12 +5,7 @@ fn main() {
     input! {
         n: usize,
     }
-
-    let mut ans = 1;
-    for i in 2..=n {
-        ans *= i;
-    }
-    println!("{}", ans);
+    println!("{}", fact(n));
 }
 
 fn fact(x: usize) -> usize {
@@ -69,5 +64,14 @@ mod tests {
     #[test]
     fn test2() {
         assert_eq!(lcm(3, 4), 12);
+    }
+
+    #[test]
+    fn test3() {
+        assert_eq!(fact(0), 1);
+        assert_eq!(fact(1), 1);
+        assert_eq!(fact(2), 2);
+        assert_eq!(fact(3), 6);
+        assert_eq!(fact(5), 120);
     }
 }
