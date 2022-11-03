@@ -4,17 +4,24 @@ use proconio::{ input };
 fn main() {
     input! {
         n: usize, s: usize,
+        mut a_vac: [usize; n],
     }
 
-    let mut cnt = 0;
-    for r_num in 1..=n {
-        for b_num in 1..=n {
-            if r_num + b_num <= s {
-                cnt += 1;
+    a_vac.insert(0, 0);
+    let mut dp: Vec<Vec<bool>> = vec![vec![false; s+1]; n+1];
+
+    dp[0][0] = true;
+    for i in 1..=n {
+        let card_no = a_vac[i];
+        for j in 0..=s {
+            if j >= card_no {
+                dp[i][j] = dp[i-1][j] | dp[i-1][j-card_no];
+            } else {
+                dp[i][j] = dp[i-1][j];
             }
         }
     }
-    println!("{}", cnt);
+    println!("{}", if dp[n][s] { "Yes" } else { "No" });
 }
 
 fn lcm(a: usize, b: usize) -> usize {
