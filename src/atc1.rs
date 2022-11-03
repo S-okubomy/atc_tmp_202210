@@ -3,9 +3,18 @@ use proconio::{ input };
 // cargo run --bin atc1
 fn main() {
     input! {
-        n: usize, x: usize, y: usize,
+        n: usize, s: usize,
     }
-    println!("{}", n / x + n / y - n / lcm(x, y));
+
+    let mut cnt = 0;
+    for r_num in 1..=n {
+        for b_num in 1..=n {
+            if r_num + b_num <= s {
+                cnt += 1;
+            }
+        }
+    }
+    println!("{}", cnt);
 }
 
 fn lcm(a: usize, b: usize) -> usize {
@@ -43,4 +52,19 @@ fn apple2() {
         }
     }
     println!("{}", min_money);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn  test1() {
+        assert_eq!(gcd(12, 18), 6);
+    }
+
+    #[test]
+    fn test2() {
+        assert_eq!(lcm(3, 4), 12);
+    }
 }
