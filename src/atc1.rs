@@ -3,9 +3,40 @@ use proconio::{ input };
 // cargo run --bin atc1
 fn main() {
     input! {
-        n: usize,
+        n: usize, s: usize,
     }
-    println!("{}", fact(n));
+    let ans: Vec<usize> = (1..=n).map(|i| {
+            let mut a_vec: Vec<usize> = Vec::new();
+            for j in 1..=n { a_vec.push(i+j) };
+            return a_vec; 
+        })
+        .flat_map(|v| v)
+        .filter(|x| x <= &s)
+        .collect();
+    
+    println!("{:?}", ans);
+
+    // let cnt: usize = (1..=n).map(|i| {
+    //         let mut a_vec: Vec<usize> = Vec::new();
+    //         for j in 1..=n { a_vec.push(i+j) };
+    //         return a_vec; 
+    //     })
+    //     .flat_map(|v| v)
+    //     .filter(|x| x <= &s)
+    //     .count();
+    // println!("{:?}", cnt);
+
+    let ans2: Vec<usize> = (1..=n).map(|i| (1..=n).map(|j| j+i).collect::<Vec<usize>>())
+            .flatten()
+            .filter(|x| x <= &s)
+            .collect();
+    println!("{:?}", ans2);
+
+    let cnt: usize = (1..=n).map(|i| (1..=n).map(|j| j+i).collect::<Vec<usize>>())
+                            .flat_map(|v| v)
+                            .filter(|x| x <= &s)
+                            .count();
+    println!("{}", cnt);
 }
 
 fn fact(x: usize) -> usize {
@@ -73,5 +104,19 @@ mod tests {
         assert_eq!(fact(2), 2);
         assert_eq!(fact(3), 6);
         assert_eq!(fact(5), 120);
+    }
+
+    #[test]
+    fn test4() {
+        // https://atcoder.jp/contests/math-and-algorithm/submissions/36177376
+        let (n, s) = (3, 4);
+        let ans1: Vec<usize> = (1..=n).map(|i| (1..=n).map(|j| j+i).collect::<Vec<usize>>())
+                                    .flatten().filter(|x| x <= &s).collect();
+        println!("{:?}", ans1);
+        assert_eq!(ans1, vec![2, 3, 4, 3, 4, 4]);
+
+        let ans2: Vec<usize> = (1..=n).map(|i| (1..=n).map(|j| j+i).collect::<Vec<usize>>())
+                                    .flat_map(|v| v).filter(|x| x <= &s).collect();
+        assert_eq!(ans2, vec![2, 3, 4, 3, 4, 4]);
     }
 }
