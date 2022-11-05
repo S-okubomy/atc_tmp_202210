@@ -1,4 +1,3 @@
-use num::integer::Roots;
 use proconio::{ input };
 
 // cargo run --bin atc1
@@ -6,18 +5,11 @@ fn main() {
     input! {
         n: usize,    
     }
-
-    let mut p_vec: Vec<usize> = Vec::new();
-    for i in 2..=n {
-        if is_prime(i) { 
-            p_vec.push(i); 
-        }
-    }
-    println!("{}", p_vec.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(" "));
+    println!("{}", (2..=n).filter(|x| !(2..=((*x as f64).sqrt() as usize)).any(|i| x % i == 0)).map(|x| x.to_string()).collect::<Vec<String>>().join(" "));
 }
 
 fn is_prime(x: usize) -> bool {
-    for i in 2..=x.sqrt() {
+    for i in 2..=((x as f64).sqrt() as usize) {
         if x % i == 0 {
             return false;
         }
