@@ -1,42 +1,28 @@
+use num::integer::Roots;
 use proconio::{ input };
 
 // cargo run --bin atc1
 fn main() {
     input! {
-        n: usize, s: usize,
+        n: usize,    
     }
-    let ans: Vec<usize> = (1..=n).map(|i| {
-            let mut a_vec: Vec<usize> = Vec::new();
-            for j in 1..=n { a_vec.push(i+j) };
-            return a_vec; 
-        })
-        .flat_map(|v| v)
-        .filter(|x| x <= &s)
-        .collect();
-    
-    println!("{:?}", ans);
 
-    // let cnt: usize = (1..=n).map(|i| {
-    //         let mut a_vec: Vec<usize> = Vec::new();
-    //         for j in 1..=n { a_vec.push(i+j) };
-    //         return a_vec; 
-    //     })
-    //     .flat_map(|v| v)
-    //     .filter(|x| x <= &s)
-    //     .count();
-    // println!("{:?}", cnt);
+    let mut p_vec: Vec<usize> = Vec::new();
+    for i in 2..=n {
+        if is_prime(i) { 
+            p_vec.push(i); 
+        }
+    }
+    println!("{}", p_vec.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(" "));
+}
 
-    let ans2: Vec<usize> = (1..=n).map(|i| (1..=n).map(|j| j+i).collect::<Vec<usize>>())
-            .flatten()
-            .filter(|x| x <= &s)
-            .collect();
-    println!("{:?}", ans2);
-
-    let cnt: usize = (1..=n).map(|i| (1..=n).map(|j| j+i).collect::<Vec<usize>>())
-                            .flat_map(|v| v)
-                            .filter(|x| x <= &s)
-                            .count();
-    println!("{}", cnt);
+fn is_prime(x: usize) -> bool {
+    for i in 2..=x.sqrt() {
+        if x % i == 0 {
+            return false;
+        }
+    }
+    true
 }
 
 fn fact(x: usize) -> usize {
