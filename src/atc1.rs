@@ -97,4 +97,11 @@ mod tests {
                                     .flat_map(|v| v).filter(|x| x <= &s).collect();
         assert_eq!(ans2, vec![2, 3, 4, 3, 4, 4]);
     }
+
+    #[test]
+    fn test5() {
+        let n = 10;
+        let ans = (2..=n).filter(|x| !(2..=((*x as f64).sqrt() as usize)).any(|i| x % i == 0)).map(|x| x.to_string()).collect::<Vec<String>>().join(" ");
+        assert_eq!(ans, "2 3 5 7");
+    }
 }
