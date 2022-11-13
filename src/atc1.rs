@@ -5,15 +5,7 @@ fn main() {
     input! {
         n: usize,
     }
-
-    let mut is_prime = true;
-    for i in 2..=((n as f64).sqrt() as usize) {
-        if n % i == 0 {
-            is_prime = false;
-            break;
-        } 
-    }
-
+    let is_prime: bool = !(2..=(n as f64).sqrt() as usize).any(|x| n % x == 0);
     println!("{}", if is_prime { "Yes" } else { "No" } );
 }
 
