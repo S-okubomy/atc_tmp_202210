@@ -3,10 +3,20 @@ use proconio::{ input };
 // cargo run --bin atc1
 fn main() {
     input! {
-        n: usize,    
+        n: usize,
     }
-    println!("{}", (2..=n).filter(|x| !(2..=((*x as f64).sqrt() as usize)).any(|i| x % i == 0)).map(|x| x.to_string()).collect::<Vec<String>>().join(" "));
+
+    let mut is_prime = true;
+    for i in 2..=((n as f64).sqrt() as usize) {
+        if n % i == 0 {
+            is_prime = false;
+            break;
+        } 
+    }
+
+    println!("{}", if is_prime { "Yes" } else { "No" } );
 }
+
 
 fn is_prime(x: usize) -> bool {
     for i in 2..=((x as f64).sqrt() as usize) {
