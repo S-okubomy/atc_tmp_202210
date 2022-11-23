@@ -5,8 +5,14 @@ fn main() {
     input! {
         n: usize,
     }
-    // (1..=((n as f64).sqrt() as usize)).filter(|x| n % x == 0).for_each(|x| { println!("{}", x); let o=n/x; if x != o { println!("{}",o)} });
-    (1..=((n as f64).sqrt() as usize)).filter(|x| n % x == 0).for_each(|x| { let o=n/x;  print!("{}", if x != o { format!("{}\n{}\n",x,o) } else {format!("{}\n",x)}); });
+    println!("{}", get_div_vec(n).iter().map(|x| x.to_string()).collect::<Vec<String>>().join("\n"))
+}
+
+fn get_div_vec(n: usize) -> Vec<usize> {
+    // (1..=((n as f64).sqrt() as usize)).filter(|x| n % x == 0).for_each(|x| { let o=n/x;  print!("{}", if x != o { format!("{}\n{}\n",x,o) } else {format!("{}\n",x)}); });
+    let mut div_vec: Vec<usize> = Vec::new();
+    (1..=((n as f64).sqrt() as usize)).filter(|x| n % x == 0).for_each(|x| { let o=n/x; if x != o { div_vec.push(x); div_vec.push(o); } else { div_vec.push(x); }});
+    div_vec
 }
 
 
@@ -65,6 +71,8 @@ fn apple2() {
 
 #[cfg(test)]
 mod tests {
+    use std::vec;
+
     use super::*;
 
     #[test]
@@ -105,5 +113,11 @@ mod tests {
         let n = 10;
         let ans = (2..=n).filter(|x| !(2..=((*x as f64).sqrt() as usize)).any(|i| x % i == 0)).map(|x| x.to_string()).collect::<Vec<String>>().join(" ");
         assert_eq!(ans, "2 3 5 7");
+    }
+
+    #[test]
+    fn test6() {
+        let ans = get_div_vec(12);
+        assert_eq!(ans, vec![1,12,2,6,3,4]);
     }
 }
