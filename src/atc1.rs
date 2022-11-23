@@ -5,8 +5,13 @@ fn main() {
     input! {
         n: usize,
     }
-    let is_prime: bool = !(2..=(n as f64).sqrt() as usize).any(|x| n % x == 0);
-    println!("{}", if is_prime { "Yes" } else { "No" } );
+    for i in 1..=((n as f64).sqrt() as usize) {
+        if n % i == 0 {
+            println!("{}", i);
+            let o = n / i;
+            if i != o  { println!("{}", o) }
+        }
+    }
 }
 
 
