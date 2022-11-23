@@ -5,13 +5,8 @@ fn main() {
     input! {
         n: usize,
     }
-    for i in 1..=((n as f64).sqrt() as usize) {
-        if n % i == 0 {
-            println!("{}", i);
-            let o = n / i;
-            if i != o  { println!("{}", o) }
-        }
-    }
+    // (1..=((n as f64).sqrt() as usize)).filter(|x| n % x == 0).for_each(|x| { println!("{}", x); let o=n/x; if x != o { println!("{}",o)} });
+    (1..=((n as f64).sqrt() as usize)).filter(|x| n % x == 0).for_each(|x| { let o=n/x;  print!("{}", if x != o { format!("{}\n{}\n",x,o) } else {format!("{}\n",x)}); });
 }
 
 
