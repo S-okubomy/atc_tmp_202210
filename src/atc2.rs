@@ -6,17 +6,20 @@ use std::fmt::format;
 fn main() {
     input! {
         n: usize,
-        p_vec: [usize; n],
+        mut p_vec: [usize; n],
+    }
+    let mut j = n -2;
+    while p_vec[j] < p_vec[j+1] {
+        j -= 1;
     }
 
-    // TODO 修正
-    let mut perm_vec: Vec<Vec<usize>> = Vec::new();
-    for perm in p_vec.iter().permutations(n) {
-        perm_vec.push(perm.into_iter().map(|x| *x).collect());
+    let mut k = n -1;
+    while p_vec[j] < p_vec[k] {
+        k -= 1;
     }
-    perm_vec.sort_by(|a, b| a.cmp(b));
-
-    if let Some(trg_index) = perm_vec.iter().position(|v| { v.iter().join("") == p_vec.iter().join("") }) {
-        println!("{}", perm_vec[trg_index-1].iter().join(" "));
-    }
+    p_vec.swap(j, k);
+    // println!("{:?}", p_vec);
+    p_vec[j+1..].reverse();
+    // println!("{:?}", p_vec);
+    println!("{}", p_vec.iter().join(" "));
 }
