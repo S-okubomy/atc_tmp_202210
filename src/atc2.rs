@@ -3,35 +3,20 @@ use proconio:: { input };
 use std::collections::{ VecDeque, HashMap, HashSet };
 use std::fmt::format;
 
-
 fn main() {
     input! {
-        _n: usize, q: usize,
-        tab_vec: [(usize, usize, usize); q],
+        n: usize,
+        p_vec: [usize; n],
     }
 
-    let mut map: HashMap<usize, HashSet<usize>> = HashMap::new();
-    for tab in tab_vec {
-        let (t, a, b) = tab;
-        match t {
-            1 => {
-                map.entry(a).or_default().insert(b);
-            },
-            2 => {
-                map.entry(a).and_modify(|s| { s.remove(&b); });
-            },
-            3 => {
-                if map.contains_key(&a) && map.contains_key(&b) {
-                    if map.get(&a).unwrap().contains(&b) && map.get(&b).unwrap().contains(&a) {
-                        println!("Yes");
-                    } else {
-                        println!("No");
-                    }
-                } else {
-                    println!("No");
-                }
-            },
-            _ => (),
-        }
+    // TODO 修正
+    let mut perm_vec: Vec<Vec<usize>> = Vec::new();
+    for perm in p_vec.iter().permutations(n) {
+        perm_vec.push(perm.into_iter().map(|x| *x).collect());
+    }
+    perm_vec.sort_by(|a, b| a.cmp(b));
+
+    if let Some(trg_index) = perm_vec.iter().position(|v| { v.iter().join("") == p_vec.iter().join("") }) {
+        println!("{}", perm_vec[trg_index-1].iter().join(" "));
     }
 }
