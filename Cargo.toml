@@ -24,3 +24,7 @@ path = "src/atc1.rs"
 [[bin]]
 name = "atc2"
 path = "src/atc2.rs"
+
+[[bin]]
+name = "atc0"
+path = "src/atc0.rs"
