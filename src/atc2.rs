@@ -5,14 +5,18 @@ use proconio:: { input };
 
 fn main() {
     input! {
-        n: usize,
-        s_vec: [isize; n],
+        s: String,
+        t: String,
     }
+    let c_s_vec: Vec<char> = s.chars().collect();
+    let c_t_vec: Vec<char> = t.chars().collect();
 
-    let mut a_vec: Vec<isize> = Vec::new();
-    a_vec.push(s_vec[0]);
-    for i in 1..n {
-        a_vec.push(s_vec[i] - s_vec[i - 1]);
+    let len = c_s_vec.len();
+    for i in 0..len {
+        if c_s_vec[i] != c_t_vec[i] {
+            println!("{}", i + 1);
+            return;
+        }
     }
-    println!("{}", a_vec.iter().join(" "));
+    println!("{}", c_t_vec.len());
 }
