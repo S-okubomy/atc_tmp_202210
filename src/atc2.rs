@@ -10,10 +10,14 @@ fn main() {
     }
 
     let mut res = 0;
-    for (p, e) in get_prime_fact(k) {
+    let prim_vec = get_prime_fact(k);
+    println!("{:?}" , prim_vec);
+    for (p, e) in prim_vec {
         let mut f = 0;
         for n in p..=(10e+12 as usize) {
+            println!("{} {}", n, p);
             f += how_many(n, p);
+            println!("f: {}", f);
             if f >= e {
                 res = max(res, n);
                 break;
@@ -53,45 +57,4 @@ fn how_many(mut n: usize, p: usize) -> usize {
 }
 
 
-
-
-
-// use std::collections::HashSet;
-
-// use itertools::Itertools;
-// use proconio:: { input };
-// use std::cmp::{ max };
-
-// fn main() {
-//     input! {
-//         mut k: usize,
-//     }
-//     let mut fact = 1;
-//     let lim: usize = (k as f64).sqrt() as usize;
-//     let mut fact_vec: Vec<(usize, usize)> = Vec::new();
-//     let mut ans = 1;
-//     let mut n = 0;
-//     for p in 2..=lim {
-//         if k % p == 0 {
-//             let mut a = 0;
-//             while k % p == 0 {
-//                 a += 1;
-//                 k /= a;
-//             }
-//             n = 0;
-//             while a > 0 {
-//                 n += p;
-//                 let mut x = n;
-
-//                 while x % p == 0 {
-//                     x /= p;
-//                     a -= 1;
-//                 }
-//             }
-//         }
-//         ans = max(ans, n);
-//     }
-//     ans = max(ans, k);
-//     println!("{:?}", ans);
-// }
 
