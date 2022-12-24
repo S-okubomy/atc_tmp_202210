@@ -1,30 +1,38 @@
-use std::collections::HashSet;
+use std::collections::{HashSet, HashMap};
 
 use itertools::Itertools;
-use proconio:: { input };
+use proconio:: { input, marker::Chars };
 use std::cmp::{ max };
 
-fn main() {
+fn main() {    
     input! {
-        mut k: usize,
+        h: usize, w: usize,
+        s_vec: [Chars; h],
+        t_vec: [Chars; h],
     }
 
-    let mut res = 0;
-    let prim_vec = get_prime_fact(k);
-    // println!("{:?}" , prim_vec);
-    for (p, e) in prim_vec {
-        let mut f = 0;
-        for n in p..=p*e {
-            // println!("{} {}", n, p);
-            f += how_many(n, p);
-            // println!("f: {}", f);
-            if f >= e {
-                res = max(res, n);
-                break;
-            }
-        }
+    let mut s_h_vec: Vec<Vec<char>> = Vec::new();
+    let mut t_h_vec: Vec<Vec<char>> = Vec::new();
+    for j in 0..w {
+        s_h_vec.push(s_vec.iter().map(|c| c[j]).collect::<Vec<char>>());
+        t_h_vec.push(t_vec.iter().map(|c| c[j]).collect::<Vec<char>>());
+
     }
-    println!("{:?}", res);
+    s_h_vec.sort();
+    t_h_vec.sort();
+
+    println!("{}", if s_h_vec == t_h_vec { "Yes" } else { "No" });
+
+    // let mut move_map: HashMap<usize, usize> = HashMap::new();
+    // for j_t in 0..w {
+    //     let to = move_map.entry(j_t).or_default();
+    //     for j_s in 0..w {
+    //         if t_vec[0][j_t] == s_vec[0][j_s] {
+    //             *to = j_s;
+    //             s_vec[0][j_s] = '-'; 
+    //         }
+    //     } 
+    // }
 }
 
 fn get_prime_fact(x: usize) -> Vec<(usize, usize)> {
