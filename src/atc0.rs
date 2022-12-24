@@ -1,54 +1,34 @@
 use itertools::Itertools;
-use proconio::{ input };
+use proconio::{ input, marker::Chars };
 
 fn main() {
     input! {
-        n: usize, m: usize,
-        nv_vec: [(usize, usize); m],
+        n: usize,
+        mut a_vec: [usize; n],
+        q_size: usize,
     }
 
-    let mut nb_vec: Vec<Vec<usize>> = vec![vec![]; n+1];
-    for nv in nv_vec {
-        let (n, v) = nv;
-        nb_vec[n].push(v);
-        nb_vec[v].push(n);
-    }
-
-
-// TODO 修正
-// https://atcoder.jp/contests/abc282/editorial/5397
-
-    let mut is_bipartite: bool = true;
-    let mut color: Vec<isize> = vec![-1; n+1];
-    let mut cnt = 0;
-    for i in 0..n {
-        if color[i] != -1 {
-            continue;
-        }
-        // if !dfs(&nb_vec, i, 0, &mut color) {
-        //     is_bipartite = false;
-        // }
-        if dfs(&nb_vec, i, 0, &mut color) {
-            cnt += 1;
+    let mut ans_vec: Vec<String> = Vec::new();
+    for _ in 0..q_size {
+        input! { q_type: usize, k: usize };
+        // println!("確認: {}", q_type);
+        if q_type == 1 {
+            input! { x: usize };
+            a_vec[k-1] = x;
+        } else if q_type == 2 {
+            ans_vec.push(a_vec[k-1].to_string());
         }
     }
+    println!("{}", ans_vec.join("\n"));
 
-    println!("{}", cnt);
-}
-
-fn dfs(nb_vec: &Vec<Vec<usize>>, v: usize, cur: isize, color: &mut Vec<isize>) -> bool {
-    color[v] = cur;
-    for next_v in &nb_vec[v] {
-        if color[*next_v] != -1 {
-            if color[*next_v] == cur {
-                return false;
-            }
-            continue;
-        }
-
-        if !dfs(nb_vec, *next_v, 1 - cur, color) {
-            return false;
-        }
-    }
-    true
+    // for q in q_vec {
+    //     let qq = q.iter().map(|s| s.to_string()).collect::<Vec<String>>();
+    //     println!("{:?}", qq);
+    //     let k = qq[1].parse::<usize>().ok().unwrap();
+    //     if qq[0] == "1" {
+    //         a_vec[k-1] = qq[2].parse().ok().unwrap();
+    //     } else {
+    //         println!("{}", a_vec[k-1]);
+    //     }
+    // }
 }
