@@ -4,7 +4,6 @@ use itertools::Itertools;
 use proconio:: { input };
 use std::cmp::{ max };
 
-// https://drken1215.hatenablog.com/entry/2022/12/05/160400
 fn main() {
     input! {
         mut k: usize,
@@ -48,7 +47,10 @@ fn get_prime_fact(x: usize) -> Vec<(usize, usize)> {
     fact_vec
 }
 
-fn how_many(mut n: usize, p: usize) -> usize {
+
+// nを指数eで何回割れるか
+// https://drken1215.hatenablog.com/entry/2022/12/05/160400
+fn how_many(mut n: usize, e: usize) -> usize {
     // 指数に注目
     // 1!=1
     // 2!=2
@@ -61,9 +63,32 @@ fn how_many(mut n: usize, p: usize) -> usize {
     // 9!=3^4×4480 (更新！)　指数が6!に比べ+2してる
 
     let mut res = 0;
-    while n % p == 0 {
-        n /= p;
+    while n % e == 0 {
+        n /= e;
         res += 1;
     }
     res
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test1() {
+        assert_eq!(how_many(8, 2), 3);
+        assert_eq!(how_many(4, 2), 2);
+        assert_eq!(how_many(2, 2), 1);
+        assert_eq!(how_many(3, 3), 1);
+        assert_eq!(how_many(6, 3), 1);
+        assert_eq!(how_many(9, 3), 2);
+    }
+
+    #[test]
+    fn test2() {
+        assert_eq!(get_prime_fact(30), vec![(2,1), (3,1), (5,1)]);
+        assert_eq!(get_prime_fact(123456789011), vec![(123456789011,1)]);
+        assert_eq!(get_prime_fact(280), vec![(2,3),(5,1),(7,1)]);
+    }
+
 }
