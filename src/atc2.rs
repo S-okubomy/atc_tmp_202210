@@ -13,11 +13,15 @@ fn main() {
 }
 
 fn dfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
+    // https://atcoder.jp/contests/abc277/tasks/abc277_c
     let mut nb_map: HashMap<usize, HashSet<usize>> = HashMap::new();
     for (a, b) in ab_vec {
         nb_map.entry(a).or_default().insert(b);
         nb_map.entry(b).or_default().insert(a);
     }
+
+    println!("{:?}", nb_map);
+
     let mut visited: HashSet<usize> = HashSet::new();
     dfs(1, &mut visited, &nb_map);
 
@@ -127,4 +131,19 @@ mod tests {
         assert_eq!(get_prime_fact(280), vec![(2,3),(5,1),(7,1)]);
     }
 
+    #[test]
+    fn test3() {
+        let ab_vec: Vec<(usize, usize)> = vec![(1,4), (4,3), (4, 10), (8,3)];
+        assert_eq!(bfs_sample1(ab_vec), 10);
+        let ab_vec: Vec<(usize, usize)> = vec![(1,3), (1,5), (1,12), (3,5), (3,12), (5,12)];
+        assert_eq!(bfs_sample1(ab_vec), 12);
+    }
+
+    #[test]
+    fn test4() {
+        let ab_vec: Vec<(usize, usize)> = vec![(1,4), (4,3), (4, 10), (8,3)];
+        assert_eq!(dfs_sample1(ab_vec), 10);
+        let ab_vec: Vec<(usize, usize)> = vec![(1,3), (1,5), (1,12), (3,5), (3,12), (5,12)];
+        assert_eq!(dfs_sample1(ab_vec), 12);
+    }
 }
