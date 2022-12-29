@@ -7,29 +7,28 @@ use std::cmp::{ max };
 fn main() {
     input! {
         n: usize,
-        s_vec: [Chars; n],
+        ab_vec: [(usize, usize); n],
     }
-    let fs_vec: Vec<char> = vec!['H', 'D', 'C', 'S'];
-    let ss_vec: Vec<char> = vec!['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
-    let mut s_set: HashSet<Vec<char>> = HashSet::new();
-    for s in s_vec {
-        if s_set.contains(&s) {
-            println!("No");
-            return;
-        }
-        s_set.insert(s.clone());
 
-        if !fs_vec.contains(&s[0]) {
-            println!("No");
-            return;
-        }
+    let mut nb_map: HashMap<usize, HashSet<usize>> = HashMap::new();
+    for (a, b) in ab_vec {
+        nb_map.entry(a).or_insert(HashSet::new()).insert(b);
+        nb_map.entry(b).or_default().insert(a);
+    }
 
-        if !ss_vec.contains(&s[1]) {
-            println!("No");
-            return;
+    let mut max_kai = 1;
+    if nb_map.contains_key(&max_kai) {
+        let mut max_per_ladder: &usize = nb_map.get(&1).unwrap().iter().max().unwrap();
+        while nb_map.contains_key(max_per_ladder) {
+            max_per_ladder = nb_map.get(&max_per_ladder).unwrap().iter().max().unwrap();
+            // println!("確認: {}", max_per_ladder);
+            if max_kai >= *max_per_ladder {
+                break;
+            }
+            max_kai = *max_per_ladder;
         }
     }
-    println!("Yes");
+    println!("{}", max_kai);
 }
 
 fn get_prime_fact(x: usize) -> Vec<(usize, usize)> {
