@@ -1,4 +1,4 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::{HashSet, HashMap, VecDeque};
 
 use itertools::Itertools;
 use proconio:: { input, marker::Chars };
@@ -9,26 +9,32 @@ fn main() {
         n: usize,
         ab_vec: [(usize, usize); n],
     }
+    println!("{}", bfs_sample1(ab_vec));
+}
 
+fn bfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
+    // https://atcoder.jp/contests/abc277/tasks/abc277_c
     let mut nb_map: HashMap<usize, HashSet<usize>> = HashMap::new();
     for (a, b) in ab_vec {
         nb_map.entry(a).or_insert(HashSet::new()).insert(b);
         nb_map.entry(b).or_default().insert(a);
     }
 
-    let mut max_kai = 1;
-    if nb_map.contains_key(&max_kai) {
-        let mut max_per_ladder: &usize = nb_map.get(&1).unwrap().iter().max().unwrap();
-        while nb_map.contains_key(max_per_ladder) {
-            max_per_ladder = nb_map.get(&max_per_ladder).unwrap().iter().max().unwrap();
-            // println!("確認: {}", max_per_ladder);
-            if max_kai >= *max_per_ladder {
-                break;
+    let mut deque: VecDeque<usize> = VecDeque::new();
+    let mut fl_set: HashSet<usize> = HashSet::new();
+    deque.push_back(1);
+    fl_set.insert(1);
+    while deque.len() > 0 {
+        let f_num = deque.pop_front().unwrap();
+        if !nb_map.contains_key(&f_num) { continue; }
+        for next_fl in nb_map.get(&f_num).unwrap() {
+            if !fl_set.contains(next_fl) {
+                fl_set.insert(*next_fl);
+                deque.push_back(*next_fl);
             }
-            max_kai = *max_per_ladder;
         }
     }
-    println!("{}", max_kai);
+    *fl_set.iter().max().unwrap()
 }
 
 fn get_prime_fact(x: usize) -> Vec<(usize, usize)> {
