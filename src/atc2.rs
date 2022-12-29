@@ -4,35 +4,32 @@ use itertools::Itertools;
 use proconio:: { input, marker::Chars };
 use std::cmp::{ max };
 
-fn main() {    
+fn main() {
     input! {
-        h: usize, w: usize,
-        s_vec: [Chars; h],
-        t_vec: [Chars; h],
+        n: usize,
+        s_vec: [Chars; n],
     }
+    let fs_vec: Vec<char> = vec!['H', 'D', 'C', 'S'];
+    let ss_vec: Vec<char> = vec!['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'];
+    let mut s_set: HashSet<Vec<char>> = HashSet::new();
+    for s in s_vec {
+        if s_set.contains(&s) {
+            println!("No");
+            return;
+        }
+        s_set.insert(s.clone());
 
-    let mut s_h_vec: Vec<Vec<char>> = Vec::new();
-    let mut t_h_vec: Vec<Vec<char>> = Vec::new();
-    for j in 0..w {
-        s_h_vec.push(s_vec.iter().map(|c| c[j]).collect::<Vec<char>>());
-        t_h_vec.push(t_vec.iter().map(|c| c[j]).collect::<Vec<char>>());
+        if !fs_vec.contains(&s[0]) {
+            println!("No");
+            return;
+        }
 
+        if !ss_vec.contains(&s[1]) {
+            println!("No");
+            return;
+        }
     }
-    s_h_vec.sort();
-    t_h_vec.sort();
-
-    println!("{}", if s_h_vec == t_h_vec { "Yes" } else { "No" });
-
-    // let mut move_map: HashMap<usize, usize> = HashMap::new();
-    // for j_t in 0..w {
-    //     let to = move_map.entry(j_t).or_default();
-    //     for j_s in 0..w {
-    //         if t_vec[0][j_t] == s_vec[0][j_s] {
-    //             *to = j_s;
-    //             s_vec[0][j_s] = '-'; 
-    //         }
-    //     } 
-    // }
+    println!("Yes");
 }
 
 fn get_prime_fact(x: usize) -> Vec<(usize, usize)> {
