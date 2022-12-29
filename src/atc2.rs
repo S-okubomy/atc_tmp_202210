@@ -9,8 +9,34 @@ fn main() {
         n: usize,
         ab_vec: [(usize, usize); n],
     }
-    println!("{}", bfs_sample1(ab_vec));
+    println!("{}", dfs_sample1(ab_vec));
 }
+
+fn dfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
+    let mut nb_map: HashMap<usize, HashSet<usize>> = HashMap::new();
+    for (a, b) in ab_vec {
+        nb_map.entry(a).or_default().insert(b);
+        nb_map.entry(b).or_default().insert(a);
+    }
+    let mut visited: HashSet<usize> = HashSet::new();
+    dfs(1, &mut visited, &nb_map);
+
+    *visited.iter().max().unwrap()
+}
+
+fn dfs(pos: usize, visited: &mut HashSet<usize>, nb_map: &HashMap<usize, HashSet<usize>>) {
+    if visited.contains(&pos) { return; }
+    
+    visited.insert(pos);
+
+    if !nb_map.contains_key(&pos) { return; }
+    for nb in nb_map.get(&pos).unwrap() {
+        if !visited.contains(nb) {
+            dfs(*nb, visited, &nb_map)
+        }
+    }
+}
+
 
 fn bfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
     // https://atcoder.jp/contests/abc277/tasks/abc277_c
