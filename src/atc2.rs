@@ -7,35 +7,24 @@ use std::cmp::{ max };
 
 fn main() {
     input! {
-        x: usize, k: usize,
+        n: usize,
+        a_vec: [usize; n],
+    }
+    let a_set: HashSet<usize> = a_vec.clone().into_iter().collect();
+
+    let mut cnt_map: HashMap<usize, usize> = HashMap::new();
+    for a in a_vec {
+        let cnt = a_set.iter().filter(|x| **x > a).count();
+        *cnt_map.entry(cnt).or_default() += 1;
     }
 
-    let mut x_vec: Vec<usize> = x.to_string().chars().map(|c| c.to_string().parse::<usize>().ok().unwrap()).collect();
-    let mut ans = x;
-    let len = x_vec.len();
-
-    if len < k {
-        println!("0");
-        return;
-    }
-
-    for i in 0..k {
-        if len <= i {
-            break;
-        }
-        let pos = len - i -1;
-        if pos == 0 {
-            break;
-        }
-
-        if x_vec[pos] >= 5 {
-            x_vec[pos-1] = x_vec[pos-1] + 1;
-        }
-        if pos != 0 {
-            x_vec[pos] = 0;
+    for i in 0..n {
+        if cnt_map.contains_key(&i) {
+            println!("{}", cnt_map.get(&i).unwrap())
+        } else {
+            println!("0");
         }
     }
-    println!("{}", x_vec.iter().join(""));
 }
 
 
