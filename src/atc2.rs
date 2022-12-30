@@ -4,21 +4,42 @@ use itertools::Itertools;
 use proconio:: { input, marker::Chars };
 use std::cmp::{ max };
 
+
 fn main() {
     input! {
-        h: usize, w: usize,
-        c_vec_vec: [Chars; h],
+        a: f64, b: f64,
     }
-    for j in 0..w {
-        let mut sum_per_col = 0;
-        for i in 0..h {
-            if c_vec_vec[i][j] == '#' {
-                sum_per_col += 1;
-            }
-        }
-        print!("{} ", sum_per_col);
-    }
+    // let scale = 1000_f64;
+    // println!("{:.3}", (((b / a) * scale).round()) / scale);
+    println!("{:.3}", b / a);
 }
+
+// fn main() {
+//     input! {
+//         n: usize,
+//         a_vec: [usize; n],
+//     }
+//     let mut ak_vec: Vec<usize> = Vec::new();
+//     for &a in a_vec.iter() {
+//         ak_vec.push(2*a);
+//         ak_vec.push(2*a+1);
+//     }
+
+//     println!("0");
+//     for ak in ak_vec {
+//         println!("{}", get_cnt_div_2(ak));
+//     }
+
+// }
+
+// fn get_cnt_div_2(mut ak: usize) -> usize {
+//     let mut cnt = 0;
+//     while ak > 1 {
+//         cnt += 1;
+//         ak /= 2;
+//     }
+//     cnt
+// }
 
 fn dfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
     // https://atcoder.jp/contests/abc277/tasks/abc277_c
