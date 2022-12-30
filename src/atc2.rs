@@ -7,18 +7,38 @@ use std::cmp::{ max };
 
 fn main() {
     input! {
-        n: usize,
-        a_vec: [usize; n],
+        x: usize, k: usize,
     }
 
-    let mut ans_vec: Vec<usize> = vec![0; 2*n + 1];
-    for (i, a) in a_vec.iter().enumerate() {
-        ans_vec[2*i+1] = ans_vec[a-1] + 1;
-        ans_vec[2*i+2] = ans_vec[a-1] + 1;
-    }
-    println!("{}", ans_vec.iter().map(|x| x.to_string()).join("\n"));
+    let mut x_vec: Vec<usize> = x.to_string().chars().map(|c| c.to_string().parse::<usize>().ok().unwrap()).collect();
+    let mut ans = x;
+    let len = x_vec.len();
 
+    if len < k {
+        println!("0");
+        return;
+    }
+
+    for i in 0..k {
+        if len <= i {
+            break;
+        }
+        let pos = len - i -1;
+        if pos == 0 {
+            break;
+        }
+
+        if x_vec[pos] >= 5 {
+            x_vec[pos-1] = x_vec[pos-1] + 1;
+        }
+        if pos != 0 {
+            x_vec[pos] = 0;
+        }
+    }
+    println!("{}", x_vec.iter().join(""));
 }
+
+
 
 
 fn dfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
