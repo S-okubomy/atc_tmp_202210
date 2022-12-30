@@ -7,39 +7,19 @@ use std::cmp::{ max };
 
 fn main() {
     input! {
-        a: f64, b: f64,
+        n: usize,
+        a_vec: [usize; n],
     }
-    // let scale = 1000_f64;
-    // println!("{:.3}", (((b / a) * scale).round()) / scale);
-    println!("{:.3}", b / a);
+
+    let mut ans_vec: Vec<usize> = vec![0; 2*n + 1];
+    for (i, a) in a_vec.iter().enumerate() {
+        ans_vec[2*i+1] = ans_vec[a-1] + 1;
+        ans_vec[2*i+2] = ans_vec[a-1] + 1;
+    }
+    println!("{}", ans_vec.iter().map(|x| x.to_string()).join("\n"));
+
 }
 
-// fn main() {
-//     input! {
-//         n: usize,
-//         a_vec: [usize; n],
-//     }
-//     let mut ak_vec: Vec<usize> = Vec::new();
-//     for &a in a_vec.iter() {
-//         ak_vec.push(2*a);
-//         ak_vec.push(2*a+1);
-//     }
-
-//     println!("0");
-//     for ak in ak_vec {
-//         println!("{}", get_cnt_div_2(ak));
-//     }
-
-// }
-
-// fn get_cnt_div_2(mut ak: usize) -> usize {
-//     let mut cnt = 0;
-//     while ak > 1 {
-//         cnt += 1;
-//         ak /= 2;
-//     }
-//     cnt
-// }
 
 fn dfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
     // https://atcoder.jp/contests/abc277/tasks/abc277_c
