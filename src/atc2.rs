@@ -6,17 +6,18 @@ use std::cmp::{ max };
 
 fn main() {
     input! {
-        a: f64, b: f64,
+        h: usize, w: usize,
+        c_vec_vec: [Chars; h],
     }
-    let scale = 1000_f64;
-    let r_s: String = (((b / a) * scale).round() / scale).to_string();
-    // println!("確認{}", r_s);
-    let r_sp: Vec<&str> = r_s.split(".").collect();
-    if r_sp.len() == 1 {
-        println!("{}", r_s + ".000");
-        return;
+    for j in 0..w {
+        let mut sum_per_col = 0;
+        for i in 0..h {
+            if c_vec_vec[i][j] == '#' {
+                sum_per_col += 1;
+            }
+        }
+        print!("{} ", sum_per_col);
     }
-    println!("{}.{:0<3}", r_sp[0], r_sp[1]);
 }
 
 fn dfs_sample1(ab_vec: Vec<(usize, usize)>) -> usize {
