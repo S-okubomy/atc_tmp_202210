@@ -7,25 +7,17 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        n: usize,
+        n: isize,
         a_vec: [isize; n],
     }
-
-    let mut cnt_map: HashMap<isize, isize> = HashMap::new();
-    for a in a_vec {
-        *cnt_map.entry(a).or_default() += 1;
-    }
-
-    println!("{:?}", cnt_map);
-
     let mut sum = 0;
-    for (val_i, cnt_i) in &cnt_map {
-        for (val_j, cnt_j) in &cnt_map {
-            sum += cnt_i * cnt_j * (val_i - val_j).pow(2);
-        }
+    for a in &a_vec {
+        sum += a.pow(2);
     }
-    println!("{}", sum/2);
+    // println!("{} {}", sum, a_vec.iter().sum::<usize>().pow(2));
+    println!("{}", n * sum - a_vec.iter().sum::<isize>().pow(2))
 }
+
 
 
 
