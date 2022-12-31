@@ -10,20 +10,22 @@ fn main() {
         n: usize,
         a_vec: [usize; n],
     }
-    let a_set: HashSet<usize> = a_vec.clone().into_iter().collect();
-
-    let mut cnt_map: HashMap<usize, usize> = HashMap::new();
+    let mut a_map: HashMap<usize, usize> = HashMap::new();
     for a in a_vec {
-        let cnt = a_set.iter().filter(|x| **x > a).count();
-        *cnt_map.entry(cnt).or_default() += 1;
+        *a_map.entry(a).or_default() += 1;
+    }
+    // let v: Vec<(usize, usize)> = a_map.into_iter().collect();
+    // v.iter().sorted_by(|&&a, &&b| (b.0).cmp(&a.0));
+    let sort_vec: Vec<(usize, usize)> = a_map.into_iter().sorted_by(|a, b| b.0.cmp(&a.0)).collect();
+    println!("{:?}", sort_vec);
+
+    for m in &sort_vec {
+        println!("{}", m.1);
     }
 
-    for i in 0..n {
-        if cnt_map.contains_key(&i) {
-            println!("{}", cnt_map.get(&i).unwrap())
-        } else {
-            println!("0");
-        }
+    let z_len = n - sort_vec.len();
+    for _ in 0..z_len {
+        println!("0");
     }
 }
 
