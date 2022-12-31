@@ -12,19 +12,19 @@ fn main() {
     }
 
     let mut cnt_map: HashMap<isize, isize> = HashMap::new();
-    for i in -200..=200 {
-        *cnt_map.entry(i).or_default() = a_vec.iter().filter(|a| **a == i).count() as isize;
+    for a in a_vec {
+        *cnt_map.entry(a).or_default() += 1;
     }
 
+    println!("{:?}", cnt_map);
+
     let mut sum = 0;
-    for val_i in cnt_map.keys() {
-        for val_j in val_i+1..=200 {
-            let &cnt_i = cnt_map.get(val_i).unwrap();
-            let &cnt_j = cnt_map.get(&val_j).unwrap();
+    for (val_i, cnt_i) in &cnt_map {
+        for (val_j, cnt_j) in &cnt_map {
             sum += cnt_i * cnt_j * (val_i - val_j).pow(2);
         }
     }
-    println!("{}", sum);
+    println!("{}", sum/2);
 }
 
 
