@@ -2,31 +2,29 @@ use std::collections::{HashSet, HashMap, VecDeque};
 
 use itertools::Itertools;
 use proconio:: { input, marker::Chars };
-use std::cmp::{ max };
+use std::cmp::{ max, min };
 
 
 fn main() {
     input! {
         n: usize,
-        a_vec: [usize; n],
+        ab_vec: [(usize, usize); n],
     }
-    let mut a_map: HashMap<usize, usize> = HashMap::new();
-    for a in a_vec {
-        *a_map.entry(a).or_default() += 1;
-    }
-    // let v: Vec<(usize, usize)> = a_map.into_iter().collect();
-    // v.iter().sorted_by(|&&a, &&b| (b.0).cmp(&a.0));
-    let sort_vec: Vec<(usize, usize)> = a_map.into_iter().sorted_by(|a, b| b.0.cmp(&a.0)).collect();
-    println!("{:?}", sort_vec);
-
-    for m in &sort_vec {
-        println!("{}", m.1);
+    let mut min_same = 10e+5 as usize; 
+    for (a, b) in &ab_vec {
+        min_same = min(min_same, a + b);
     }
 
-    let z_len = n - sort_vec.len();
-    for _ in 0..z_len {
-        println!("0");
+    let mut min_diff = 10e+5 as usize;
+    for i in 0..n {
+        for j in 0..n {
+            if i != j {
+                let (a, b) = (ab_vec[i].0, ab_vec[j].1);
+                min_diff = min(min_diff, max(a, b));
+            }
+        }
     }
+    println!("{}", min(min_diff, min_same));
 }
 
 
