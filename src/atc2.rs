@@ -8,23 +8,23 @@ use std::cmp::{ max, min };
 fn main() {
     input! {
         n: usize,
-        ab_vec: [(usize, usize); n],
-    }
-    let mut min_same = 10e+5 as usize; 
-    for (a, b) in &ab_vec {
-        min_same = min(min_same, a + b);
+        a_vec: [isize; n],
     }
 
-    let mut min_diff = 10e+5 as usize;
-    for i in 0..n {
-        for j in 0..n {
-            if i != j {
-                let (a, b) = (ab_vec[i].0, ab_vec[j].1);
-                min_diff = min(min_diff, max(a, b));
-            }
+    let mut cnt_map: HashMap<isize, isize> = HashMap::new();
+    for i in -200..=200 {
+        *cnt_map.entry(i).or_default() = a_vec.iter().filter(|a| **a == i).count() as isize;
+    }
+
+    let mut sum = 0;
+    for val_i in cnt_map.keys() {
+        for val_j in val_i+1..=200 {
+            let &cnt_i = cnt_map.get(val_i).unwrap();
+            let &cnt_j = cnt_map.get(&val_j).unwrap();
+            sum += cnt_i * cnt_j * (val_i - val_j).pow(2);
         }
     }
-    println!("{}", min(min_diff, min_same));
+    println!("{}", sum);
 }
 
 
