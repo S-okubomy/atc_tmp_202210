@@ -7,21 +7,24 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        mut n: isize,
-        a_vec: [usize; n],
+        mut x: isize, mut y: isize, mut z: isize,
     }
 
-    let set_a: HashSet<usize> = a_vec.into_iter().collect();
-    let mut read = 0;
-    while n >= 0 {
-        read += 1;
-        if set_a.contains(&read) {
-            n -= 1;
+    if y < 0 {
+        x = -x;
+        y = -y;
+        z = -z;
+    }
+
+    if x < y {
+        println!("{}", x.abs());
+    } else {
+        if y < z {
+            println!("-1");
         } else {
-            n -= 2;
+            println!("{}", z.abs() + (x-z).abs());
         }
     }
-    println!("{}", read-1);
 }
 
 
