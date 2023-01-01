@@ -7,23 +7,21 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        n: usize,
-        a_vec: [isize; n],
+        mut n: isize,
+        a_vec: [usize; n],
     }
 
-    let mut even_vec: Vec<&isize> = a_vec.iter().filter(|a| **a % 2 == 0).collect();
-    let mut odd_vec: Vec<&isize> = a_vec.iter().filter(|a| **a %2 != 0).collect();
-    even_vec.sort_by(|a, b| b.cmp(&a));
-    odd_vec.sort_by(|a, b| b.cmp(&a));
-
-    let mut max_sum: isize = -1;
-    if even_vec.len() >= 2 {
-        max_sum = max(max_sum, even_vec[0] + even_vec[1]);
+    let set_a: HashSet<usize> = a_vec.into_iter().collect();
+    let mut read = 0;
+    while n >= 0 {
+        read += 1;
+        if set_a.contains(&read) {
+            n -= 1;
+        } else {
+            n -= 2;
+        }
     }
-    if odd_vec.len() >= 2 {
-        max_sum = max(max_sum, odd_vec[0] + odd_vec[1]);
-    }
-    println!("{}", max_sum);
+    println!("{}", read-1);
 }
 
 
