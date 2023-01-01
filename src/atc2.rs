@@ -7,24 +7,48 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        mut x: isize, mut y: isize, mut z: isize,
+        s_vec_vec: [Chars; 10],
     }
 
-    if y < 0 {
-        x = -x;
-        y = -y;
-        z = -z;
-    }
+    // println!("{:?}", s_vec_vec);
+    let mut a = 0;
+    let mut flag_row = false;
+    let mut b = 0;
+    let mut c = 0;
+    let mut flag_col = false;
+    let mut d = 0;
 
-    if x < y {
-        println!("{}", x.abs());
-    } else {
-        if y < z {
-            println!("-1");
-        } else {
-            println!("{}", z.abs() + (x-z).abs());
+    'loop_j: for j in 0..10 {
+        for i in 0..10 {
+            if !flag_row && s_vec_vec[i][j] == '#' {
+                a = i + 1;
+                flag_row = true;
+            }
+            if flag_row && s_vec_vec[i][j] == '#' {
+                b = i + 1;
+                if i == 9 {
+                    break 'loop_j;
+                }
+            }
         }
     }
+
+    'loop_i: for i in 0..10 {
+        for j in 0..10 {
+            if !flag_col && s_vec_vec[i][j] == '#' {
+                c = j + 1;
+                flag_col = true;
+            }
+            if flag_col && s_vec_vec[i][j] == '#' {
+                d = j + 1;
+                if j == 9 {
+                    break 'loop_i;
+                }
+            }
+        }
+    }
+    println!("{} {}", a, b);
+    println!("{} {}", c, d);
 }
 
 
