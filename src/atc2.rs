@@ -7,48 +7,35 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        s_vec_vec: [Chars; 10],
+        n: u64,
     }
 
-    // println!("{:?}", s_vec_vec);
-    let mut a = 0;
-    let mut flag_row = false;
-    let mut b = 0;
-    let mut c = 0;
-    let mut flag_col = false;
-    let mut d = 0;
+    // let b = format!("{:b}", n);
+    // println!("{}", b);
 
-    'loop_j: for j in 0..10 {
-        for i in 0..10 {
-            if !flag_row && s_vec_vec[i][j] == '#' {
-                a = i + 1;
-                flag_row = true;
-            }
-            if flag_row && s_vec_vec[i][j] == '#' {
-                b = i + 1;
-                if i == 9 {
-                    break 'loop_j;
-                }
-            }
+    // let c_vec: Vec<char> = format!("{:b}", n).chars().collect();
+    let mut a_vec: Vec<u64> = Vec::new();
+    for i in 0..60 {
+        if n & (1<<i) != 0 {
+            a_vec.push(i);
         }
     }
 
-    'loop_i: for i in 0..10 {
-        for j in 0..10 {
-            if !flag_col && s_vec_vec[i][j] == '#' {
-                c = j + 1;
-                flag_col = true;
-            }
-            if flag_col && s_vec_vec[i][j] == '#' {
-                d = j + 1;
-                if j == 9 {
-                    break 'loop_i;
-                }
+    let k = a_vec.len();
+    let mut ans: Vec<u64> = Vec::new();
+    for i in 0..(1<<k) {
+        let mut cur = 0;
+        for j in 0..k {
+            if i & 1<<j != 0 {
+                cur = cur | 1<<a_vec[j];
             }
         }
+        ans.push(cur);
     }
-    println!("{} {}", a, b);
-    println!("{} {}", c, d);
+
+    ans.sort();
+
+    println!("{}", ans.iter().join("\n"));
 }
 
 
