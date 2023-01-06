@@ -7,34 +7,20 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        n: u64,
+        n: usize,
     }
 
-    // let b = format!("{:b}", n);
-    // println!("{}", b);
-
-    // let c_vec: Vec<char> = format!("{:b}", n).chars().collect();
-    let mut a_vec: Vec<u64> = Vec::new();
-    for i in 0..60 {
-        if n & (1<<i) != 0 {
-            a_vec.push(i);
-        }
-    }
-
-    let k = a_vec.len();
-    let mut ans: Vec<u64> = Vec::new();
-    for i in 0..(1<<k) {
-        let mut cur = 0;
-        for j in 0..k {
-            if i & 1<<j != 0 {
-                cur = cur | 1<<a_vec[j];
+    let mut ans: Vec<usize> = Vec::new();
+    ans.push(0);
+    for d in 0..60 {
+        if n & (1<<d) != 0 {
+            let sz = ans.len();
+            for i in 0..sz {
+                ans.push(ans[i] | (1<<d));
             }
         }
-        ans.push(cur);
     }
-
-    ans.sort();
-
+    // ans.sort();
     println!("{}", ans.iter().join("\n"));
 }
 
