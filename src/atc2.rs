@@ -7,27 +7,38 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        n: u64,
+        mut s_vec: Chars,
+    }
+    s_vec.insert(0, '$');
+
+    if s_vec[1] == '1' {
+        println!("No");
+        return;
     }
 
-    let mut one_vec: Vec<usize> = Vec::new();
-    for i in 0..60 {
-        if n & (1<<i) != 0 {
-            one_vec.push(i);
-        }
-    }
-    let k = one_vec.len();
-    let mut ans: Vec<u64> = Vec::new();
-    for i in 0..(1<<k) {
-        let mut cur = 0;
-        for j in 0..k {
-            if i & (1<<j) != 0 {
-                cur = cur | 1<<one_vec[j];
+    let mut column: Vec<bool> = vec![false; 7];
+    column[0] = s_vec[7] == '1';
+    column[1] = s_vec[4] == '1';
+    column[2] = s_vec[2] == '1' || s_vec[8] == '1';
+    column[3] = s_vec[1] == '1' || s_vec[5] == '1';
+    column[4] = s_vec[3] == '1' || s_vec[9] == '1';
+    column[5] = s_vec[6] == '1';
+    column[6] = s_vec[10] == '1';
+
+    for i in 0..7 {
+        for j in 0..i {
+            if column[i] && column[j] {
+                for k in j+1..i {
+                    if !column[k] {
+                        println!("Yes");
+                        return;
+                    }
+                }
             }
         }
-        ans.push(cur);
     }
-    println!("{}", ans.iter().join("\n"));
+
+    println!("No");
 }
 
 
