@@ -7,38 +7,16 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        mut s_vec: Chars,
-    }
-    s_vec.insert(0, '$');
-
-    if s_vec[1] == '1' {
-        println!("No");
-        return;
+        mut n: isize,
     }
 
-    let mut column: Vec<bool> = vec![false; 7];
-    column[0] = s_vec[7] == '1';
-    column[1] = s_vec[4] == '1';
-    column[2] = s_vec[2] == '1' || s_vec[8] == '1';
-    column[3] = s_vec[1] == '1' || s_vec[5] == '1';
-    column[4] = s_vec[3] == '1' || s_vec[9] == '1';
-    column[5] = s_vec[6] == '1';
-    column[6] = s_vec[10] == '1';
-
-    for i in 0..7 {
-        for j in 0..i {
-            if column[i] && column[j] {
-                for k in j+1..i {
-                    if !column[k] {
-                        println!("Yes");
-                        return;
-                    }
-                }
-            }
-        }
+    const MOD: isize = 998244353;
+    n %= MOD;
+    if n < 0 {
+        println!("te: {}", n);
+        n += MOD;
     }
-
-    println!("No");
+    println!("{}", n);
 }
 
 
