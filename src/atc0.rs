@@ -3,18 +3,24 @@ use proconio::{ input, marker::Chars };
 
 fn main() {
     input! {
-        s: Chars,
+        n: usize, p: usize, q: usize, r:usize, s: usize,
+        mut a_vec: [usize; n],
     }
+    // let mut s1_vec: Vec<usize> = a_vec[r-1..s].to_vec();
+    // let mut s2_vec: Vec<usize> = a_vec[p-1..q].to_vec();
+    // let mut mid_vec: Vec<usize> = a_vec[q..r-1].to_vec();
+    // let mut last_vec: Vec<usize> = a_vec[s..n].to_vec();
+    // let mut ans: Vec<usize> = Vec::new();
 
-    let mut cnt = 0;
-    let mut is_renzoku = false;
-    for i in 0..s.len() - 1 {
-        if s[i] == '0' && s[i+1] == '0' && !is_renzoku {
-            cnt += 1;
-            is_renzoku = true;
-        } else {
-            is_renzoku = false;
-        }
+    // ans.append(&mut s1_vec);
+    // ans.append(&mut mid_vec);
+    // ans.append(&mut s2_vec);
+    // ans.append(&mut last_vec);
+    // println!("{}", ans.iter().join(" "));
+
+    let len = q - p + 1;
+    for i in 0..len {
+        a_vec.swap(p-1+i, r-1+i);
     }
-    println!("{}", s.len() - cnt);
+    println!("{}", a_vec.iter().join(" "));
 }
