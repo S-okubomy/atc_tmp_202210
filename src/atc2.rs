@@ -7,16 +7,14 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        mut n: isize,
+        a: usize, b: usize,
     }
 
-    const MOD: isize = 998244353;
-    n %= MOD;
-    if n < 0 {
-        println!("te: {}", n);
-        n += MOD;
+    if (2 * a == b) || 2 * a + 1 == b {
+        println!("Yes");
+    } else {
+        println!("No");
     }
-    println!("{}", n);
 }
 
 
