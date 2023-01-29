@@ -7,16 +7,23 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        a: usize, b: usize,
+        n: usize,
+        s: Chars,
     }
 
-    if (2 * a == b) || 2 * a + 1 == b {
-        println!("Yes");
-    } else {
-        println!("No");
+    for i in 1..n {
+        for j in 1..=n {
+            if i + j > n {
+                println!("{}", j-1);
+                break;
+            }
+            if s[j-1]==s[j+i-1] {
+                println!("{}", j-1);
+                break;
+            }
+        }
     }
 }
-
 
 
 
