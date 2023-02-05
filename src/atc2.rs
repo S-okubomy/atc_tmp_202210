@@ -7,22 +7,25 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        n: usize,
-        s: Chars,
+        n: usize, a: usize, b: usize,
+        s_vec: Chars,
     }
 
-    for i in 1..n {
-        for j in 1..=n {
-            if i + j > n {
-                println!("{}", j-1);
-                break;
-            }
-            if s[j-1]==s[j+i-1] {
-                println!("{}", j-1);
-                break;
+    let mut deque: VecDeque<char> = s_vec.into_iter().collect::<VecDeque<char>>();
+    let mut ans = 1<<60;
+    for i in 0..n {
+        let mut tmp_ans = 0;
+        tmp_ans += i * a;
+        for j in 0..n/2 {
+            if deque[j] != deque[n-j-1] {
+                tmp_ans += b;
             }
         }
+        ans = min(ans, tmp_ans);
+        let f = deque.pop_front().unwrap();
+        deque.push_back(f);
     }
+    println!("{}", ans);
 }
 
 
