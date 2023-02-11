@@ -7,25 +7,24 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        n: usize, a: usize, b: usize,
         s_vec: Chars,
     }
+    // let alp_vec: Vec<char> = (0..=25).map(|x| ((65 + x) as u8) as char).collect();
 
-    let mut deque: VecDeque<char> = s_vec.into_iter().collect::<VecDeque<char>>();
-    let mut ans = 1<<60;
-    for i in 0..n {
-        let mut tmp_ans = 0;
-        tmp_ans += i * a;
-        for j in 0..n/2 {
-            if deque[j] != deque[n-j-1] {
-                tmp_ans += b;
-            }
-        }
-        ans = min(ans, tmp_ans);
-        let f = deque.pop_front().unwrap();
-        deque.push_back(f);
+    let alp_map: HashMap<char, u64> = (0..=25).map(|x| ((((65 + x) as u8) as char), x+1)).collect();
+
+    // println!("{}", ((0 + 65) as u8) as char);
+    // println!("{:?}", alp_map);
+
+    let len = s_vec.len();
+    let mut sum: u64 = 0;
+    for i in 0..len {
+        let now_val = alp_map.get(&s_vec[len-i-1]).unwrap();
+        // println!("{}", now_val);
+        sum += (26_u64).pow(i as u32) * alp_map.get(&s_vec[len-i-1]).unwrap();
     }
-    println!("{}", ans);
+
+    println!("{}", sum);
 }
 
 
