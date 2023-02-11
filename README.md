@@ -93,6 +93,13 @@ sqlite3 ai_db.db
 4. hash -r  
 5. git rev-list --all | xargs git grep -e "Hash.*"
 
+### git確認方法
+
+```
+git rev-list --all | xargs git grep -e "dfs.*"
+git show 86b682a0ea941d8605af39ccf454c4f2aa4c485c:./atc0.rs
+```
+
 
 ## other 
 ### …or create a new repository on the command line
