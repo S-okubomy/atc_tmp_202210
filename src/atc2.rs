@@ -1,4 +1,4 @@
-use std::collections::{HashSet, HashMap, VecDeque};
+use std::{collections::{HashSet, HashMap, VecDeque}, result};
 
 use itertools::Itertools;
 use proconio:: { input, marker::Chars };
@@ -7,24 +7,44 @@ use std::cmp::{ max, min };
 
 fn main() {
     input! {
-        s_vec: Chars,
-    }
-    // let alp_vec: Vec<char> = (0..=25).map(|x| ((65 + x) as u8) as char).collect();
-
-    let alp_map: HashMap<char, u64> = (0..=25).map(|x| ((((65 + x) as u8) as char), x+1)).collect();
-
-    // println!("{}", ((0 + 65) as u8) as char);
-    // println!("{:?}", alp_map);
-
-    let len = s_vec.len();
-    let mut sum: u64 = 0;
-    for i in 0..len {
-        let now_val = alp_map.get(&s_vec[len-i-1]).unwrap();
-        // println!("{}", now_val);
-        sum += (26_u64).pow(i as u32) * alp_map.get(&s_vec[len-i-1]).unwrap();
+        n: usize, m: usize,
+        ab_vec: [(usize, usize); m],
     }
 
-    println!("{}", sum);
+    let mut nb_vec: Vec<Vec<usize>> = vec![vec![];n+1];
+    for (a, b) in ab_vec {
+        nb_vec[a].push(b);
+        nb_vec[b].push(a);
+    }
+
+    let mut visited: Vec<bool> = vec![false;n+1];
+    let mut finished: Vec<bool> = vec![false;n+1];
+    let mut result: HashMap<String, usize> = vec![("res".to_string(),0)].into_iter().collect::<HashMap<String, usize>>();
+    for i in 1..=n {
+        if !visited[i] {
+            dfs1(i, 0, &mut visited, &mut finished, &nb_vec, &mut result);
+        }
+    }
+    println!("{}", result.get("res").unwrap());
+}
+
+fn dfs1(cur: usize, bef: usize, visited: &mut Vec<bool>, finished: &mut Vec<bool>, nb_vec: &Vec<Vec<usize>>, result: &mut HashMap<String, usize>) {
+    visited[cur] = true;
+
+    for next_v in &nb_vec[cur] {
+        if *next_v == bef { continue; }
+
+        if visited[*next_v] {
+            if !finished[*next_v] {
+                let res = result.entry("res".to_string()).or_insert(0);
+                *res += 1;
+            }
+        } else {
+            dfs1(*next_v, cur, visited, finished, nb_vec, result);
+        }
+    }
+
+    finished[cur] = true;
 }
 
 
