@@ -91,6 +91,7 @@ sqlite3 ai_db.db
 2. /usr/local/bin/pip3 install -r requirements.txt  
 3. pip3 install -r requirements.txt  
 4. hash -r  
+5. git rev-list --all | xargs git grep -e "Hash.*"
 
 
 ## other 
