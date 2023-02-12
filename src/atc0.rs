@@ -2,34 +2,7 @@ use itertools::Itertools;
 use proconio::{ input, marker::Chars };
 
 fn main() {
-    input! {
-        n: usize, m: usize,
-        ab_vec: [(usize, usize); m],
-    }
-
-    let mut nb_vec: Vec<Vec<usize>> = vec![vec![]; n+1];
-    for (a, b) in ab_vec {
-        nb_vec[a].push(b);
-        nb_vec[b].push(a);
-    }
-
-    let mut is_passed: Vec<bool> = vec![false; n+1];
-
-    println!("{:?}", nb_vec);
-
-    // println!("{}", dfs(1, 0, &mut is_passed, &nb_vec));
-
-    let mut visited: Vec<bool> = vec![false; n+1]; // false: 通ってない、true: 通った
-    dfs(&mut visited, &nb_vec, 1);
-
-    let mut cnt = 0;
-
-    for v in visited.iter().skip(1) {
-        if *v {
-            cnt += 1;
-        } 
-    }
-    println!("{}", cnt);
+    
 }
 
 fn dfs(visited: &mut Vec<bool>, neighber_nodes: &Vec<Vec<usize>>, pos: usize) -> () {

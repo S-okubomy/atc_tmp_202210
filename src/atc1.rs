@@ -1,11 +1,18 @@
-use proconio::{ input };
+use proconio::{ input, marker::Chars };
 
 // cargo run --bin atc1
 fn main() {
     input! {
         n: usize,
+        a_vec: [isize; n],
+        b_vec: [isize; n],
     }
-    println!("{}", get_div_vec(n).iter().map(|x| x.to_string()).collect::<Vec<String>>().join("\n"))
+
+    let mut sum = 0;
+    for i in 0..n {
+        sum += a_vec[i] * b_vec[i];
+    }
+    println!("{}", if sum == 0 { "Yes" } else { "No" });
 }
 
 fn get_div_vec(n: usize) -> Vec<usize> {

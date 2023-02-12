@@ -8,27 +8,31 @@ use std::cmp::{ max, min };
 fn main() {
     input! {
         n: usize, m: usize,
-        ab_vec: [(usize, usize); m],
+        a_vec: [usize;m],
+    }
+    let mut re_vec: Vec<bool> = vec![false; n+1];
+    for a in a_vec {
+        re_vec[a] = true;
     }
 
-    let mut nb_vec: Vec<Vec<usize>> = vec![vec![];n+1];
-    for (a, b) in ab_vec {
-        nb_vec[a].push(b);
-        nb_vec[b].push(a);
-    }
-
-    let mut visited: Vec<bool> = vec![false;n+1];
-    let mut finished: Vec<bool> = vec![false;n+1];
-    let mut result: HashMap<String, usize> = vec![("res".to_string(),0)].into_iter().collect::<HashMap<String, usize>>();
-    for i in 1..=n {
-        if !visited[i] {
-            dfs1(i, 0, &mut visited, &mut finished, &nb_vec, &mut result);
+    let mut ans_vec: Vec<usize> = Vec::new();
+    let mut l_pos = 1;
+    while l_pos <= n {
+        let mut r_pos = l_pos;
+        while re_vec[r_pos] {
+            r_pos += 1;
         }
+
+        for k in (l_pos..=r_pos).rev() {
+            ans_vec.push(k);
+        }
+        l_pos = r_pos + 1;
     }
-    println!("{}", result.get("res").unwrap());
+    println!("{}", ans_vec.iter().join(" "));
 }
 
-fn dfs1(cur: usize, bef: usize, visited: &mut Vec<bool>, finished: &mut Vec<bool>, nb_vec: &Vec<Vec<usize>>, result: &mut HashMap<String, usize>) {
+fn dfs1(cur: usize, bef: usize, visited: &mut Vec<bool>, finished: &mut Vec<bool>, nb_vec: &Vec<Vec<usize>>
+    , result: &mut HashMap<String, usize>) {
     visited[cur] = true;
 
     for next_v in &nb_vec[cur] {
